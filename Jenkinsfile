@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        skipDefaultCheckout(true)
+    }
+
     stages {
 
         stage('Clone Code') {
@@ -14,21 +18,35 @@ pipeline {
         stage('Test Python') {
             steps {
                 dir('python-app') {
-                    sh 'pip install -r requirement.txt'
-                    sh 'pytest'
+                    bat 'pip install -r requirements.txt'
+                    bat 'pytest'
                 }
             }
         }
 
         // -------- REACT --------
-        stage('Build React') {
+        stage('Install React') {
             steps {
                 dir('react-app') {
-                    sh 'npm install'
-                    sh 'npm run build'
+                    bat 'npm install'
                 }
             }
         }
 
+        stage('Test React') {
+            steps {
+                dir('react-app') {
+                    bat 'npm test -- --watchAll=false'
+                }
+            }
+        }
+
+        stage('Build React') {
+            steps {
+                dir('react-app') {
+                    bat 'npm run build'
+                }
+            }
+        }
     }
 }
