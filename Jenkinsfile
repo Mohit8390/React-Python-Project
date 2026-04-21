@@ -27,7 +27,9 @@ pipeline {
         // -------- REACT --------
         stage('Install React') {
             steps {
-                bat 'npm install'
+                dir('react-app') {
+                    bat 'npm install'
+                }
             }
         }
 
