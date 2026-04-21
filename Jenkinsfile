@@ -5,7 +5,8 @@ pipeline {
 
         stage('Clone Code') {
             steps {
-                git 'https://github.com/Mohit8390/React-Python-Project.git'
+                git branch: 'main',
+                    url: 'https://github.com/Mohit8390/React-Python-Project.git'
             }
         }
 
