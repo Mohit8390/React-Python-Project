@@ -48,5 +48,28 @@ pipeline {
                 }
             }
         }
+
+        stage('Build Docker Images - Python') {
+            steps {
+                dir('python-app') {
+                    bat 'docker build -t mohitbachhav/python-app:latest .'
+                }
+            }
+        }
+
+        stage('Build Docker Images - ReactJS') {
+            steps {
+                dir('react-app') {
+                    bat 'docker build -t mohitbachhav/react-app:latest .'
+                }
+            }
+        }
+
+        stage('Push to DockerHub') {
+            steps {
+                bat 'docker build -t mohitbachhav/python-app:latest .'
+                bat 'docker build -t mohitbachhav/react-app:latest .'
+            }
+        }
     }
 }
