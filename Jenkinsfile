@@ -67,8 +67,19 @@ pipeline {
 
         stage('Push to DockerHub') {
             steps {
-                bat 'docker build -t mohitbachhav/python-app:latest .'
-                bat 'docker build -t mohitbachhav/react-app:latest .'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-creds',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    bat """
+                    docker logout
+                    echo %DOCKER_PASS%> pass.txt
+                    docker login -u %DOCKER_USER% --password-stdin < pass.txt
+                    docker push mohitbachhav/python-app:latest
+                    docker push mohitbachhav/react-app:latest
+                    """
+                }
             }
         }
     }
