@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+
+  python-app:
+    image: mohitbachhav/python-app:latest
+    container_name: python-container
+    ports:
+      - "8080:8080"
+    restart: always
+
+  react-app:
+    image: mohitbachhav/react-app:latest
+    container_name: react-container
+    ports:
+      - "5000:5000"
+    restart: always
